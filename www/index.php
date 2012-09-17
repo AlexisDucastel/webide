@@ -25,6 +25,7 @@ require_once __DIR__."/../conf/config.php";
 	<script src="ace/mode-xml.js" type="text/javascript" charset="utf-8"></script>
     
     
+	<script src="js/jss.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/action.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/tree.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/editor.js" type="text/javascript" charset="utf-8"></script>
@@ -63,7 +64,10 @@ require_once __DIR__."/../conf/config.php";
 				if(cpTab.data('focusCallback')!=null)cpTab.data('focusCallback')();
 			});
 
-			addFolderActions($('#projectRoot'),'/');
+            api.llPath('/',function(ll){
+                if(ll.tags.indexOf('gitroot')>-1)$('#projectRoot .icon').attr('src','img/git.jpg');
+                addFolderActions($('#projectRoot'),ll);
+            });
 
 			window.onbeforeunload = function(){ 
                 var openTabList=dijit.byId('cpTab').getChildren();
@@ -96,6 +100,9 @@ require_once __DIR__."/../conf/config.php";
             $('#status').children(':first').before( $('<div/>').html(log).css('color',color) );
         }
 
+        function toggleHidden(){
+            //if()
+        }
         function toggleStatus(){
             $('#status').toggle();
             dijit.byId('bcMain').resize();
@@ -155,7 +162,8 @@ require_once __DIR__."/../conf/config.php";
 		</div>
         
     	<div data-dojo-type="dijit.layout.ContentPane" id="cpHeader" region="bottom" style="height:20px;">
-			<img class="clickable" src="img/folder_add.png" onclick="addVirtualRoot();">
+			<img class="clickable ghost" src="img/emotion_ghost.png" onclick="toggleHidden();">
+            <img class="clickable" src="img/folder_add.png" onclick="addVirtualRoot();">
 			<img class="clickable" src="img/page_white_text.png" onclick="toggleStatus();">
 			<img class="clickable" src="img/application_osx_terminal.png" onclick="openTerminal();">
 		</div>

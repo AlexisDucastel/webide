@@ -17,6 +17,7 @@ iframe { border: solid 1px silver; }
 .action { display:none; float:right; margin-left: 3px; }
 .directory:hover .action, .file:hover .action { display: block;}
 
+.hidden { display:none; }
 
 .editMenu { height: 20px;padding:3px; }
 .editMenu .item { cursor: pointer; margin: 0 3px; }

@@ -47,6 +47,7 @@ class Ajax{
     public function gitCommit($path,$comment){
         $path=$this->virtualpathToReal($path);
         chdir( is_dir($path)?$path:dirname($path) );
+        shell_exec('git add '.$path);
         return shell_exec('git commit -a -m '.escapeshellarg($comment) .' '.$path);
     }
     public function gitPush($path){
@@ -202,6 +203,22 @@ class Ajax{
 			'file'=>$fileList,
 		);
 	}
+    
+    public function llPath($path){
+        $ll=array(
+            'type'=>is_dir($path)?'dir':'file',
+            'perm'=>getFilePerm($path),
+            'name'=>basename($path),
+            'tags'=>array(),
+        );
+        if(is_dir($path)){
+            if(is_dir("$path/.git"))$tags[]="gitroot";
+        }
+        else {
+            $ll['size']=filesize($path);
+        }
+        return $ll;
+    }
 	public function ll($folder){
         $folder=$this->virtualpathToReal($folder);
 
@@ -217,24 +234,10 @@ class Ajax{
 		sort($fileTmpList);
         
         $dirList=array();
-        foreach($dirTmpList as $dir){
-            $tags=array();
-            if(is_dir("$folder/$dir/.git"))$tags[]="gitroot";
-            $dirList[]=array(
-                'perm'=>getFilePerm("$folder/$dir"),
-                'name'=>$dir,
-                'tags'=>$tags,
-            );
-        }
+        foreach($dirTmpList as $dir) $dirList[]=$this->llPath("$folder/$dir");
+        
         $fileList=array();
-        foreach($fileTmpList as $file){
-            $tags=array();
-            $fileList[]=array(
-                'perm'=>getFilePerm("$folder/$file"),
-                'name'=>$file,
-                'tags'=>$tags,
-            );
-        }
+        foreach($fileTmpList as $file) $fileList[]=$this->llPath("$folder/$file");
         
 		return array(
 			'dir'=>$dirList,

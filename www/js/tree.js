@@ -2,6 +2,7 @@
 
 function addFolderActions(f,folder){
     var path=folder.parentPath+folder.name+'/';
+    if(folder.name.substr(0,1)=='.') f.addClass('hidden');
     
     // Ajax upload
     var uploader = new qq.FileUploader({
@@ -104,6 +105,9 @@ function addFolderActions(f,folder){
 }
 function addFileActions(f,file){
     var path=file.parentPath+file.name;
+    
+    if(file.name.substr(0,1)=='.') f.addClass('hidden');
+    
     // Contextual menu
     var cMenu;
     pMenu = new dijit.Menu();

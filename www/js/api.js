@@ -17,6 +17,7 @@ api={
 	},
 	ls:function(dir,callback){ return this.a('ls',[dir],callback); },
 	ll:function(dir,callback){ return this.a('ll',[dir],callback); },
+	llPath:function(dir,callback){ return this.a('llPath',[dir],callback); },
 	getFile:function(file,callback){ return this.a('getFile',[file],callback); },
 	setFile:function(file,content,callback){ return this.a('setFile',[file,content],callback); },
     createFile:function(file,callback){ return this.a('createFile',[file],callback); },
