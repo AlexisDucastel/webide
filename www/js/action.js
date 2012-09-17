@@ -62,11 +62,11 @@ function addVirtualRoot(){
     
     api.addVirtualRoot(name,url,function(data){
         var newRoot=$('<div class="directory closed">').data('realpath','@'+name+'/')
-            .append($('<img src="img/ftp.png" class="icon" title="">'))
+            .append($('<img src="img/world_link.png" class="icon" title="">'))
             .append($('<span/>').text(' '+name));
         $("#cpTree").append(newRoot);
         newRoot.click( dirOnclick );
-        addFolderActions(newRoot,'@'+name+'/');
+        addFolderActions(newRoot,{name:'@'+name+'/',parentPath:'',tags:[]});
     });
 }
 function uncompress(file){

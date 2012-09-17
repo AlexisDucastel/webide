@@ -48,7 +48,7 @@ class Ajax{
         $path=$this->virtualpathToReal($path);
         chdir( is_dir($path)?$path:dirname($path) );
         shell_exec('git add '.$path);
-        return shell_exec('git commit -a -m '.escapeshellarg($comment) .' '.$path);
+        return shell_exec('git commit -m '.escapeshellarg($comment) .' '.$path.' 2>&1');
     }
     public function gitPush($path){
         $path=$this->virtualpathToReal($path);
@@ -212,7 +212,7 @@ class Ajax{
             'tags'=>array(),
         );
         if(is_dir($path)){
-            if(is_dir("$path/.git"))$tags[]="gitroot";
+            if(is_dir("$path/.git"))$ll['tags'][]="gitroot";
         }
         else {
             $ll['size']=filesize($path);

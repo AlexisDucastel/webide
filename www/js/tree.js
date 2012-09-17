@@ -235,9 +235,7 @@ function dirOnclick(e){
 					var dir=data.dir[i];
                     dir.parentPath=parentPath;
                     var icon='img/folder.png';
-                    if(dir.tags.indexOf('gitroot')>-1){
-                        icon='img/git.jpg';
-                    }
+                    if(dir.tags.indexOf('gitroot')>-1){ icon='img/git.jpg'; }
 					var content='';
 					content+='<img src="'+icon+'" class="icon" title=""> '+dir.name;
 					var f=$('<div class="directory closed"/>').click(dirOnclick)

@@ -163,7 +163,7 @@ require_once __DIR__."/../conf/config.php";
         
     	<div data-dojo-type="dijit.layout.ContentPane" id="cpHeader" region="bottom" style="height:20px;">
 			<img class="clickable ghost" src="img/emotion_ghost.png" onclick="toggleHidden();">
-            <img class="clickable" src="img/folder_add.png" onclick="addVirtualRoot();">
+            <img class="clickable" src="img/world_add.png" onclick="addVirtualRoot();">
 			<img class="clickable" src="img/page_white_text.png" onclick="toggleStatus();">
 			<img class="clickable" src="img/application_osx_terminal.png" onclick="openTerminal();">
 		</div>
