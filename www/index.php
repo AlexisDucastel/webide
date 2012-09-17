@@ -101,7 +101,8 @@ require_once __DIR__."/../conf/config.php";
         }
 
         function toggleHidden(){
-            //if()
+            if(!jss('.hidden').get().display)jss('.hidden',{'display':'none'});
+            else jss('.hidden').remove();
         }
         function toggleStatus(){
             $('#status').toggle();

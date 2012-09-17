@@ -91,15 +91,18 @@ var jss = (function (undefined) {
         // Browsers report selectors in lowercase
         if (selector) selector = selector.toLowerCase();
 
+        console.log(sheet,selector);
+        console.log('ok01');
         if (typeof sheet.length == 'number') {
             // Array of sheets
+            console.log('ok02');
             for (i = 0; i < sheet.length; i++) {
                 results = results.concat(jss._getRules(sheet[i], selector));
             }
         } else {
             // Single sheet
             rules = sheet.cssRules || sheet.rules;
-            for (i = 0; i < rules.length; i++) {
+            if(rules!==null) for (i = 0; i < rules.length; i++) {
                 // Warning, selectorText may not be correct in IE<9
                 // as it splits selectors with ',' into multiple rules.
                 // Also, certain rules (e.g. @rules) don't have selectorText
@@ -116,7 +119,9 @@ var jss = (function (undefined) {
             }
         }
 
+        console.log('ok04');
         return results;
+        
     };
     
     // IE9 stores rules with attributes (classes or ID's) adjacent in the opposite order as defined
@@ -240,6 +245,7 @@ var jss = (function (undefined) {
 
             if (prop !== undefined) {
                 propName = jss._toCamelCase(prop);
+                console.log('ok1');
                 for (i = rules.length - 1; i >=0; i--) {
                     // added test for emtpy string to handle style selector defined more than once
                     if (rules[i].style[propName] != null && rules[i].style[propName] != '') {
@@ -247,14 +253,17 @@ var jss = (function (undefined) {
                         break;
                     }
                 }
+                console.log('ok2');
             } else {
                 result = {};
+                console.log('ok3');
                 for (i = 0; i < rules.length; i++) {
                     for (j = 0; j < rules[i].style.length; j++) {
                         propName = rules[i].style[j];
                         result[propName] = rules[i].style[propName];
                     }
                 }
+                console.log('ok4');
             }
             
             return result;

@@ -53,7 +53,7 @@ class Ajax{
     public function gitPush($path){
         $path=$this->virtualpathToReal($path);
         chdir( is_dir($path)?$path:basename($path) );
-        return shell_exec('git push -u origin master');
+        return shell_exec('git push -u origin master 2>&1');
     }
     public function gitRevert($path){
         $path=$this->virtualpathToReal($path);
