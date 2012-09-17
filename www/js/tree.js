@@ -1,7 +1,7 @@
 //=== FOLDER actions binding ===========================================
 
 function addFolderActions(f,folder){
-    var path=folder.name;
+    var path=folder.parentPath+folder.name+'/';
     
     // Ajax upload
     var uploader = new qq.FileUploader({
@@ -103,7 +103,7 @@ function addFolderActions(f,folder){
 	});
 }
 function addFileActions(f,file){
-    var path=file.name;
+    var path=file.parentPath+file.name;
     // Contextual menu
     var cMenu;
     pMenu = new dijit.Menu();
@@ -229,17 +229,23 @@ function dirOnclick(e){
             else {
 				for(var i in data.dir){
 					var dir=data.dir[i];
+                    dir.parentPath=parentPath;
+                    var icon='img/folder.png';
+                    if(dir.tags.indexOf('gitroot')>-1){
+                        icon='img/git.jpg';
+                    }
 					var content='';
-					content+='<img src="img/folder.png" class="icon" title=""> '+dir.name;
+					content+='<img src="'+icon+'" class="icon" title=""> '+dir.name;
 					var f=$('<div class="directory closed"/>').click(dirOnclick)
 						.data('realpath',parentPath+dir.name+'/')
 						.html(content).appendTo(d);
-					addFolderActions(f,parentPath+dir.name+'/');
+					addFolderActions(f,dir);
                     
                     setMovable(f);
 				}
 				for(var i in data.file){
 					var file=data.file[i];
+                    file.parentPath=parentPath;
 					var content='';
 					var icon="page_white";
                     switch(file.name.split('.').pop()){
@@ -266,7 +272,7 @@ function dirOnclick(e){
                         .data('realpath',parentPath+file.name)
                         .html(content).appendTo(d);
                         
-					addFileActions(f,parentPath+file.name);
+					addFileActions(f,file);
                     
                     setMovable(f);
 				}
