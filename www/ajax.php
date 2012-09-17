@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__."/../lib/fileperm.php";
 require_once __DIR__."/../conf/config.php";
 
 function to_utf8($in){
@@ -196,6 +197,45 @@ class Ajax{
 		}
 		sort($dirList);
 		sort($fileList);
+		return array(
+			'dir'=>$dirList,
+			'file'=>$fileList,
+		);
+	}
+	public function ll($folder){
+        $folder=$this->virtualpathToReal($folder);
+
+		$dirTmpList=array();
+		$fileTmpList=array();
+        $scan=@scandir("$folder/");
+        if(is_array($scan))foreach($scan as $f){
+            if( in_array($f,array('.','..')) ) continue;
+    		if(is_dir("$folder/$f")) $dirTmpList[]=$f;
+			else $fileTmpList[]=$f;
+		}
+		sort($dirTmpList);
+		sort($fileTmpList);
+        
+        $dirList=array();
+        foreach($dirTmpList as $dir){
+            $tags=array();
+            if(is_dir("$folder/$dir/.git"))$tags[]="gitroot";
+            $dirList[]=array(
+                'perm'=>getFilePerm("$folder/$dir"),
+                'name'=>$dir,
+                'tags'=>$tags,
+            );
+        }
+        $fileList=array();
+        foreach($fileTmpList as $file){
+            $tags=array();
+            $fileList[]=array(
+                'perm'=>getFilePerm("$folder/$file"),
+                'name'=>$file,
+                'tags'=>$tags,
+            );
+        }
+        
 		return array(
 			'dir'=>$dirList,
 			'file'=>$fileList,

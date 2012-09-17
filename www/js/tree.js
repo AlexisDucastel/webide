@@ -1,6 +1,7 @@
 //=== FOLDER actions binding ===========================================
 
-function addFolderActions(f,path){
+function addFolderActions(f,folder){
+    var path=folder.name;
     
     // Ajax upload
     var uploader = new qq.FileUploader({
@@ -101,7 +102,8 @@ function addFolderActions(f,path){
         }
 	});
 }
-function addFileActions(f,path){
+function addFileActions(f,file){
+    var path=file.name;
     // Contextual menu
     var cMenu;
     pMenu = new dijit.Menu();
@@ -219,7 +221,7 @@ function dirOnclick(e){
 	if(t.hasClass('closed')){
 		var d=$('<div/>').addClass('dirContent');
 		t.append(' <img class="loading" src="img/loading.gif" />');
-		api.ls(parentPath,function(data){
+		api.ll(parentPath,function(data){
             
             if( (data.dir.length + data.file.length)==0){
                 $('<span style="color:silver;font-style:italic;" class="file">vide</span>').appendTo(d);
@@ -228,11 +230,11 @@ function dirOnclick(e){
 				for(var i in data.dir){
 					var dir=data.dir[i];
 					var content='';
-					content+='<img src="img/folder.png" class="icon" title=""> '+dir;
+					content+='<img src="img/folder.png" class="icon" title=""> '+dir.name;
 					var f=$('<div class="directory closed"/>').click(dirOnclick)
-						.data('realpath',parentPath+dir+'/')
+						.data('realpath',parentPath+dir.name+'/')
 						.html(content).appendTo(d);
-					addFolderActions(f,parentPath+dir+'/');
+					addFolderActions(f,parentPath+dir.name+'/');
                     
                     setMovable(f);
 				}
@@ -240,7 +242,7 @@ function dirOnclick(e){
 					var file=data.file[i];
 					var content='';
 					var icon="page_white";
-                    switch(file.split('.').pop()){
+                    switch(file.name.split('.').pop()){
                         case 'gz': 
                         case 'zip': icon="compress"; break;
                         
@@ -259,12 +261,12 @@ function dirOnclick(e){
                         case 'html': icon="page_white_code"; break;
                         case 'css': icon="page_white_code_red"; break;
 		            }
-					content+='<img src="img/'+icon+'.png" class="icon" title=""> '+file;
+					content+='<img src="img/'+icon+'.png" class="icon" title=""> '+file.name;
 					var f=$('<div class="file"/>')
-                        .data('realpath',parentPath+file)
+                        .data('realpath',parentPath+file.name)
                         .html(content).appendTo(d);
                         
-					addFileActions(f,parentPath+file);
+					addFileActions(f,parentPath+file.name);
                     
                     setMovable(f);
 				}
