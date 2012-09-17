@@ -1,0 +1,23 @@
+
+ACE Editor
+    ** https://github.com/ajaxorg/ace/wiki/Creating-or-Extending-an-Edit-Mode
+    ** https://github.com/ajaxorg/ace/wiki/Embedding---API
+    http://shiftedit.net/tests/ace-resize
+    
+Dojo Tree
+    http://www.roseindia.net/dojo/dojo-tree.shtml
+    http://www.ajaxtree.com/SimpleDojoTreeExample/simpleDojoTree.html
+
+Ajax Upload
+    http://valums.com/ajax-upload/
+
+Apache Rewriting Variables
+    http://www.askapache.com/htaccess/mod_rewrite-variables-cheatsheet.html
+
+Apache MySQL Auth
+    http://www.debuntu.org/how-to-apache2-authentication-using-mysql-backend
+
+Online YUI Compressor
+    http://refresh-sf.com/yui/
+
+http://www.humour.com/diaporamas/lacer-ses-chaussures.htm
