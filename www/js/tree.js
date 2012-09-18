@@ -46,11 +46,23 @@ function addFolderActions(f,folder){
     pMenu.addChild(new dijit.MenuSeparator());
     
     var gitSubMenu = new dijit.Menu();
+        
+        
+        
+        gitSubMenu.addChild(new dijit.MenuItem({
+            label: '<img src="img/control_play_blue.png" class="icon"> init',
+            onClick:function(){ 
+                $('#gitInit [name=path]').val(path); 
+                $('#gitInit').show(); 
+            },
+            disabled: (path.substr(0,1)=='@')
+        }));
         gitSubMenu.addChild(new dijit.MenuItem({
             label: '<img src="img/arrow_up.png" class="icon"> push',
             onClick:function(){ gitPush(path); },
             disabled: (path.substr(0,1)=='@')
         }));
+        
         gitSubMenu.addChild(new dijit.MenuItem({
             label: '<img src="img/accept.png" class="icon"> commit',
             onClick:function(){ gitCommit(path); },

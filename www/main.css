@@ -22,3 +22,14 @@ iframe { border: solid 1px silver; }
 .editMenu { height: 20px;padding:3px; }
 .editMenu .item { cursor: pointer; margin: 0 3px; }
 .clickable { cursor: pointer; border:none; }
+
+.overlay-bg,.overlay-bg { position: fixed; width:100%; height: 100%; top:0; left:0; background: gray; opacity: 0.8; z-index:10; }
+.overlay-fg { position: fixed; z-index:20; top:50%; left:50%; background: white; border-radius: 5px; padding :10px; }
+
+#gitInit { display:none; }
+#gitInit .overlay-fg { width: 300px; height: 150px; margin-left: -150px; margin-top: -75px; }
+
+form table th { text-align:right; }
+form table th:after { content:"\A0:\A0"; }
+form table input[type=text] { width:100%; }
+form table input[type=submit] { padding: 3px 5px; }

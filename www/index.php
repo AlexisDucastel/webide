@@ -66,6 +66,7 @@ require_once __DIR__."/../conf/config.php";
 
             api.llPath('/',function(ll){
                 if(ll.tags.indexOf('gitroot')>-1)$('#projectRoot .icon').attr('src','img/git.jpg');
+                ll.parentPath='';
                 addFolderActions($('#projectRoot'),ll);
             });
 
@@ -153,8 +154,34 @@ require_once __DIR__."/../conf/config.php";
 </head>
 <body class="claro">
 
-<div data-dojo-type="dijit.layout.BorderContainer" id="bcMain" style="width:100%;height:100%;">
+<div id="gitInit">
+    <div class="overlay-bg"></div>
+    <div class="overlay-fg">
+        <form onsubmit="return gitInitSubmit();">
+        <input type="hidden" name="path">
+        <table style="width:100%;height:100%;">
+            <tr>
+                <th>Author name</th>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <th>Author email</th>
+                <td><input type="text" name="email"></td>
+            </tr>
+            <tr>
+                <th>Git origin</th>
+                <td><input type="text" name="origin"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align:center;"><input type="submit" value="Go"></td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>
 
+<div data-dojo-type="dijit.layout.BorderContainer" id="bcMain" style="width:100%;height:100%;">
 	<div data-dojo-type="dijit.layout.BorderContainer" id="bcMenu" region="left" style="width:200px;" splitter="true">
 
 		<?php // Project Tree  ?>

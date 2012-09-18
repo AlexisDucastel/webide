@@ -17,6 +17,21 @@ function refreshFolder(folder,onlyIfOpen){
     });
 }
 
+function gitInitSubmit(){
+    var name=$('#gitInit [name=name]').val(),
+        email=$('#gitInit [name=email]').val(),
+        origin=$('#gitInit [name=origin]').val(),
+        path=$('#gitInit [name=path]').val();
+        
+        
+    api.gitInit(path,name,email,origin,function(data){
+        if(!data) return statusLog(path+' : git init impossible','error');
+        else return statusLog(path+' : git init ok','info');
+    });
+    $('#gitInit').hide();
+    return false;
+}
+
 function gitCommit(path){
     var comment=prompt("Commentaire :","");
     if(!comment)return;
@@ -25,7 +40,6 @@ function gitCommit(path){
         if(!data) return statusLog(path+' : git commit impossible','error');
         else return statusLog(path+' : git commit ok','info');
     });
-    
 }
 function gitPush(path){
     api.gitPush(path,function(data){

@@ -33,5 +33,6 @@ api={
     addVirtualRoot:function(name,url,callback){ return this.a('addVirtualRoot',[name,url],callback); },
     gitCommit:function(path,comment,callback){ return this.a('gitCommit',[path,comment],callback); },
     gitPush:function(path,callback){ return this.a('gitPush',[path],callback); },
-    gitRevert:function(path,callback){ return this.a('gitRevert',[path],callback); }
+    gitRevert:function(path,callback){ return this.a('gitRevert',[path],callback); },
+    gitInit:function(path,name,email,origin,callback){ return this.a('gitInit',[path,name,email,origin],callback); }
 };

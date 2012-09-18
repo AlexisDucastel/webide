@@ -44,6 +44,18 @@ class Ajax{
     
     
     
+    public function gitInit($path,$name,$email,$origin){
+        $path=$this->virtualpathToReal($path);
+        if(!is_dir($path))error("$path is not a folder");
+        chdir($path);
+        shell_exec('git init');
+        shell_exec('git config user.email '.escapeshellarg($email).' 2>&1');
+        shell_exec('git config user.name '.escapeshellarg($name).' 2>&1');
+        shell_exec('git remote add origin  '.escapeshellarg($origin).' 2>&1');
+        shell_exec('git add '.escapeshellarg($path));
+        shell_exec('git commit -a -m "first commit"');
+        return true;
+    }
     public function gitCommit($path,$comment){
         $path=$this->virtualpathToReal($path);
         chdir( is_dir($path)?$path:dirname($path) );
