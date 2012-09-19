@@ -32,6 +32,8 @@ function gitInitSubmit(){
     return false;
 }
 
+
+
 function gitCommit(path){
     var comment=prompt("Commentaire :","");
     if(!comment)return;
@@ -41,6 +43,7 @@ function gitCommit(path){
         else return statusLog(path+' : git commit ok','info');
     });
 }
+
 function gitPush(path){
     api.gitPush(path,function(data){
         if(!data) return statusLog(path+' : git push impossible','error');
@@ -52,6 +55,18 @@ function gitRevert(path){
     api.gitRevert(path,function(data){
         if(!data) return statusLog(path+' : git revert impossible','error');
         else return statusLog(path+' : git revert ok','info');
+    });
+}
+
+function rename(path){
+    var parent=path.replace(/\/$/,'').replace(/[^\/]+$/,'');
+    var name=prompt("Nouveau nom :",(/\/([^\/]+)\/?$/).exec(path)[1]);
+    if(!name)return;
+    
+    api.rename(path,name,function(data){
+        if(!data) return statusLog(path+' : rename impossible','error');
+        else statusLog(path+' :  rename ok','info');
+        refreshFolder(parent);
     });
 }
 

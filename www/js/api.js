@@ -35,5 +35,6 @@ api={
     gitPush:function(path,callback){ return this.a('gitPush',[path],callback); },
     gitRevert:function(path,callback){ return this.a('gitRevert',[path],callback); },
     gitInit:function(path,name,email,origin,callback){ return this.a('gitInit',[path,name,email,origin],callback); },
-    createLink:function(target,name,callback){ return this.a('createLink',[target,name],callback); }
+    createLink:function(target,name,callback){ return this.a('createLink',[target,name],callback); },
+    rename:function(path,name,callback){ return this.a('rename',[path,name],callback); }
 };

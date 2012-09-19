@@ -38,6 +38,10 @@ function addFolderActions(f,folder){
             label: '<img src="img/bin_empty.png" class="icon"> Supprimer',
             onClick:function(){ deleteFolderFromPath(path); }
         }));
+        pMenu.addChild(new dijit.MenuItem({
+            label: '<img src="img/text_replace.png" class="icon"> Renommer',
+            onClick:function(){ rename(path); }
+        }));
     }
     else if(path.substr(0,1)=='@'){
         
@@ -178,6 +182,10 @@ function addFileActions(f,file){
     pMenu.addChild(new dijit.MenuItem({
         label: '<img src="img/bin_empty.png" class="icon"> Supprimer',
         onClick:function(){ deleteFileFromPath(path); }
+    }));
+    pMenu.addChild(new dijit.MenuItem({
+        label: '<img src="img/text_replace.png" class="icon"> Renommer',
+        onClick:function(){ rename(path); }
     }));
     
     

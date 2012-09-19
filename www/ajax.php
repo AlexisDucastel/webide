@@ -35,6 +35,17 @@ class Ajax{
         
         return rename($srcPath,$tgtPath);
     }
+    public function rename($path,$name){
+        $path=$this->virtualpathToReal($path);
+        
+        if(!file_exists($path))error("Path $path does not exists");
+        
+        $newPath=dirname($path).'/'.$name;
+        if(file_exists($newPath))error("Path $newPath already exists");
+        
+        
+        return rename($path,$newPath);
+    }
     public function createLink($target,$name){
         $target=$this->virtualpathToReal($target);
         $name=$this->virtualpathToReal($name);
