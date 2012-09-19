@@ -238,30 +238,29 @@ class Ajax{
         else {
             $ll['size']=filesize($path);
         }
+        if(is_link($path))$ll['tags'][]="symlink";
+        
         return $ll;
     }
 	public function ll($folder){
         $folder=$this->virtualpathToReal($folder);
-
-		$dirTmpList=array();
-		$fileTmpList=array();
+        
+        $contentList=array();
         $scan=@scandir("$folder/");
         if(is_array($scan))foreach($scan as $f){
             if( in_array($f,array('.','..')) ) continue;
-    		if(is_dir("$folder/$f")) $dirTmpList[]=$f;
-			else $fileTmpList[]=$f;
-		}
-		sort($dirTmpList);
-		sort($fileTmpList);
+            $contentList[] = $this->llPath("$folder/$f");
+        }
         
         $dirList=array();
-        foreach($dirTmpList as $dir) $dirList[]=$this->llPath("$folder/$dir");
-        
         $fileList=array();
-        foreach($fileTmpList as $file) $fileList[]=$this->llPath("$folder/$file");
-        
-		return array(
-			'dir'=>$dirList,
+        foreach($contentList as $f){
+            if($f['type']=='dir')$dirList[]=$f;
+            else $fileList[]=$f;
+        }
+
+        return array(
+    		'dir'=>$dirList,
 			'file'=>$fileList,
 		);
 	}

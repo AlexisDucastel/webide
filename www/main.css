@@ -7,8 +7,8 @@ h1 { margin:0; padding:0; width:100%; text-align:center; }
 .directory:hover , .file:hover { background: #DDF;}
 .dropDir { background: #DFD;}
 .ui-draggable-dragging { z-index: 10; }
-.directory.closed:before {content:"+\A0";}
-.directory.opened:before {content:"-\A0\A0";}
+.directory.closed:before {content:"+\A0";color:black;}
+.directory.opened:before {content:"-\A0\A0";color:black;}
 .dirContent { padding:0; margin:0; margin-left:5px; border: none; border-left: dotted 1px silver; }
 .dirContent .file {margin-left: 10px;}
 .dirContent .dirContent { border-color: #DDD; }

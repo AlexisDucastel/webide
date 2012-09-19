@@ -100,10 +100,9 @@ function addFolderActions(f,folder){
         hoverClass: "dropDir",
         drop: function(e,ui){
             var srcPath=ui.draggable.data('realpath');
-            if(srcPath=='/')return true;
+            if(srcPath=='/')return statusLog('src cannot be '+srcPath,'error');
             var srcDir=ui.draggable.parent().prev().data('realpath');
             var tgtPath=$(this).data('realpath');
-            if(srcDir==tgtPath)return true;
             
             if(e.ctrlKey){
                 
@@ -121,14 +120,17 @@ function addFolderActions(f,folder){
                     });
                 });
             }
-            else if(confirm("Confirmer le déplacement de "+srcPath+" vers "+tgtPath+" ?")){
-                api.movePath(srcPath,tgtPath,function(data){
-                    ui.draggable.draggable("option","revert",false);
-                    ui.draggable.draggable("option","stop",function(){
-                        refreshFolder(srcDir,true);
-                        refreshFolder(tgtPath,true);
+            else {
+                if(srcDir==tgtPath)return statusLog('src cannot be the same as target : '+srcDir,'error');
+                if(confirm("Confirmer le déplacement de "+srcPath+" vers "+tgtPath+" ?")){
+                    api.movePath(srcPath,tgtPath,function(data){
+                        ui.draggable.draggable("option","revert",false);
+                        ui.draggable.draggable("option","stop",function(){
+                            refreshFolder(srcDir,true);
+                            refreshFolder(tgtPath,true);
+                        });
                     });
-                });
+                }   
             }
         }
 	});
@@ -265,12 +267,15 @@ function dirOnclick(e){
 					var dir=data.dir[i];
                     dir.parentPath=parentPath;
                     var icon='img/folder.png';
+                    var color='black';
                     if(dir.tags.indexOf('gitroot')>-1){ icon='img/git.jpg'; }
+                    if(dir.tags.indexOf('symlink')>-1){ color='blue'; }
 					var content='';
 					content+='<img src="'+icon+'" class="icon" title=""> '+dir.name;
 					var f=$('<div class="directory closed"/>').click(dirOnclick)
 						.data('realpath',parentPath+dir.name+'/')
-						.html(content).appendTo(d);
+						.html(content).appendTo(d).css({color:color});
+                        
 					addFolderActions(f,dir);
                     
                     setMovable(f);
