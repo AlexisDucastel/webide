@@ -267,9 +267,14 @@ function dirOnclick(e){
 					var dir=data.dir[i];
                     dir.parentPath=parentPath;
                     var icon='img/folder.png';
-                    var color='black';
+                    
                     if(dir.tags.indexOf('gitroot')>-1){ icon='img/git.jpg'; }
-                    if(dir.tags.indexOf('symlink')>-1){ color='blue'; }
+                    
+                    var color='black';
+                    if(dir.tags.indexOf('symlink')>-1){
+                        color=(dir.tags.indexOf('broken')>-1)?'red':'blue';
+                    }
+                    
 					var content='';
 					content+='<img src="'+icon+'" class="icon" title=""> '+dir.name;
 					var f=$('<div class="directory closed"/>').click(dirOnclick)
@@ -304,10 +309,15 @@ function dirOnclick(e){
                         case 'html': icon="page_white_code"; break;
                         case 'css': icon="page_white_code_red"; break;
 		            }
+                    var color='black';
+                    if(file.tags.indexOf('symlink')>-1){
+                        color=(file.tags.indexOf('broken')>-1)?'red':'blue';
+                    }
+                    
 					content+='<img src="img/'+icon+'.png" class="icon" title=""> '+file.name;
 					var f=$('<div class="file"/>')
                         .data('realpath',parentPath+file.name)
-                        .html(content).appendTo(d);
+                        .html(content).appendTo(d).css({color:color});
                         
 					addFileActions(f,file);
                     

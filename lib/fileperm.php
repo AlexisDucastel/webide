@@ -1,6 +1,6 @@
 <?php
 function getFilePerm($file){
-    $perms = fileperms($file);
+    $perms = @fileperms($file);
     
     if (($perms & 0xC000) == 0xC000) {
         // Socket

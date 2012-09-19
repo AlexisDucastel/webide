@@ -232,13 +232,22 @@ class Ajax{
             'name'=>basename($path),
             'tags'=>array(),
         );
-        if(is_dir($path)){
+        
+        if(is_link($path)){
+            $ll['tags'][]="symlink";
+            
+            $target=readlink($path);
+            chdir(dirname($path));
+            if(!file_exists($target))$ll['tags'][]="broken";
+        }
+        
+        if($ll['type']=='dir'){
             if(is_dir("$path/.git"))$ll['tags'][]="gitroot";
         }
         else {
-            $ll['size']=filesize($path);
+            $ll['size']=@filesize($path);
         }
-        if(is_link($path))$ll['tags'][]="symlink";
+        
         
         return $ll;
     }
