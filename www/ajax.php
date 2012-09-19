@@ -35,6 +35,12 @@ class Ajax{
         
         return rename($srcPath,$tgtPath);
     }
+    public function createLink($target,$name){
+        $target=$this->virtualpathToReal($target);
+        $name=$this->virtualpathToReal($name);
+        
+        return symlink($target,$name);
+    }
 	public function getFile($file){
 		$file=$this->virtualpathToReal($file);
         
@@ -134,16 +140,13 @@ class Ajax{
         switch( array_pop($p) ){
             case 'bz2': 
             case 'gz': 
-                if(array_pop($p)=='tar'){
-                    $cmd='/bin/tar -xf "'.$file.'"';
-                    shell_exec($cmd);
+                if(array_pop($p)!='tar'){
+                    // 
+                    break;
                 }
-                break;
             case 'tgz': 
-                $zip = new ZipArchive();
-                if (!$zip->open($file)) error("Cannot open zip file");
-                $zip->extractTo($folder);
-                $zip->close();
+                $cmd='/bin/tar -xf '.escapeshellarg($file);
+                shell_exec($cmd);
                 break;
             case 'zip': 
                 $zip = new ZipArchive();
@@ -177,6 +180,12 @@ class Ajax{
         $folder=$this->virtualpathToReal($folder);
         if(!is_dir($folder))error("Folder $folder does not exists !");
         
+        // the foler is a symlink
+        if(is_link($folder)){
+            return @unlink($folder);
+        }
+        
+        // else recursively delete entire folder
         chdir($folder);
         
         echo shell_exec('rm -R *');

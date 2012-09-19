@@ -99,11 +99,29 @@ function addFolderActions(f,folder){
     f.droppable({
         hoverClass: "dropDir",
         drop: function(e,ui){
-            var srcDir=ui.draggable.parent().prev().data('realpath');
             var srcPath=ui.draggable.data('realpath');
+            if(srcPath=='/')return true;
+            var srcDir=ui.draggable.parent().prev().data('realpath');
             var tgtPath=$(this).data('realpath');
             if(srcDir==tgtPath)return true;
-            if(confirm("Confirmer le déplacement de "+srcPath+" vers "+tgtPath+" ?")){
+            
+            if(e.ctrlKey){
+                
+            }
+            else if(e.altKey){
+                var name=prompt("Quel nom pour le lien symbolique ?",(/\/([^\/]+)\/?$/).exec(srcPath)[1]);
+                if(name==null || name=='')return true;
+                
+                var tgtDir=tgtPath;
+                tgtPath+=name;
+                api.createLink(srcPath,tgtPath,function(data){
+                    ui.draggable.draggable("option","revert",false);
+                    ui.draggable.draggable("option","stop",function(){
+                        refreshFolder(tgtDir,true);
+                    });
+                });
+            }
+            else if(confirm("Confirmer le déplacement de "+srcPath+" vers "+tgtPath+" ?")){
                 api.movePath(srcPath,tgtPath,function(data){
                     ui.draggable.draggable("option","revert",false);
                     ui.draggable.draggable("option","stop",function(){
