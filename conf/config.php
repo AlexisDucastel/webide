@@ -2,8 +2,8 @@
 umask(0007);
 
 define('PROJECT_WWW',$_SERVER['DOCUMENT_ROOT']);
-define('PROJECT_ROOT',dirname(PROJECT_WWW));
-define('PROJECT_NAME',basename(PROJECT_ROOT));
+define('PROJECT_ROOT','/data');
+define('PROJECT_NAME','Web IDE');
 define('PROJECT_USER',$_SERVER['REMOTE_USER']);
 
 function virtualpathToReal($path){
